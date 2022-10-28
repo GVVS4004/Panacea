@@ -1,0 +1,33 @@
+{% extends "base.html" %}{% block title%}Sign Up{% endblock %}
+{% block current_signup%}active{%endblock%}
+{% block content%}
+<form method='POST' style="align-items:center;width:50%;margin-left:25%" action='/sign-up'>
+    <h3 align="center">Sign Up</h3>
+    <div class="input-group mb-3">
+        <span class="input-group-text" id="basic-addon1">Email</span>
+        <input type="email" class="form-control" id='email' name='email' placeholder="abc@gmail.com" aria-label="Username" aria-describedby="basic-addon1" >
+    </div>
+    <div class="input-group mb-3">
+        <span class="input-group-text" id="basic-addon1">First Name</span>
+        <input type="text" class="form-control" id='firstame' name='firstname' placeholder="Mark" aria-label="Username" aria-describedby="basic-addon1" >
+    </div>
+    <div class="input-group mb-3">
+        <span class="input-group-text" id="basic-addon1">Last Name</span>
+        <input type="text" class="form-control" id='lastname' name='lastname' placeholder="Zukerberg" aria-label="Username" aria-describedby="basic-addon1" >
+    </div>
+    <div class="input-group mb-3">
+        <span class="input-group-text" id="basic-addon1">Mobile number</span>
+        <input type="text" class="form-control" id='phno' name='phno' placeholder="9165413322" aria-label="Username" aria-describedby="basic-addon1" >
+    </div>
+    <div class="input-group mb-3">
+        <span class="input-group-text" id="basic-addon1">Password</span>
+        <input type="text" class="form-control" id='password1' name='password1' placeholder="abc@_123" aria-label="Username" aria-describedby="basic-addon1" >
+    </div>
+    <div class="input-group mb-3">
+        <span class="input-group-text" id="basic-addon1">Password(confirm)</span>
+        <input type="text" class="form-control" id='password2' name='password2' placeholder="abc@_123" aria-label="Username" aria-describedby="basic-addon1" >
+    </div>
+    <br/>
+    <button align="center" type="submit" class='btn btn-primary' >Submit</button>
+</form>
+{%endblock%}
