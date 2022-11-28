@@ -1,0 +1,54 @@
+{%extends 'dash_base.html'%}
+{%block heading%}My CART{%endblock%}
+{%block content%}
+    <div class="container">
+        {%if items!=None%}
+        <div class="row">
+            {% for i in items %}
+            <div class='col-sm-3'>
+                <div class="card" style="width: 19rem;border:solid black;margin:5px">
+                    {%if i['src']==None %}
+                    <img class="card-img-top" src="{{url_for('static',filename='images/googlelens.png')}}" style='height:17rem'>
+                    {%else%}
+                    <img class="card-img-top" src="{{i['src']}}" style='height:17rem'>
+                    {%endif%}
+                    <div class="card-body">
+                        <h5 class="card-title"><strong >{{i['name']}}</strong></h5>
+                        <ul class="list-group list-group-flush">
+                        <li class="list-group-item"><pre><strong>Calories</strong>          {{i['cal']}} Kcal</pre></li>
+                        <li class="list-group-item"><pre><strong>Fats</strong>              {{i['fats']}} g</pre></li>
+                        <li class="list-group-item"><pre><strong>Sugars</strong>            {{i['sug']}} g</pre></li>
+                        <li class="list-group-item"><pre><strong>Protiens</strong>          {{i['pro']}} g</pre></li>
+                        <li class="list-group-item"><pre><strong>Carbohydrates</strong>     {{i['carbs']}} g</pre></li>
+                        <li class="list-group-item"><pre><strong>Weight</strong>            {{i['food_wt']}} g</pre></li>
+                        </ul>
+                        <form method='POST' action='/delete/{{i['food_id']}}'>
+                            <input type='hidden'id='{{i['food_id']}}' name='foodid{{i['food_id']}}'><script>var id=document.getElementById('foodid{{i['food_id']}}').value=`{{i['food_id']}}`;
+                                console.log(document.getElementById('foodid'));
+                            </script>
+                            <input type='hidden'id='foodname{{i['food_id']}}' name='foodname{{i['food_id']}}' value='{{i['name']}}'><script>
+                            </script>
+                            <button type='submit' class='btn-primary'>Delete
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+            <br>
+            {%endfor%}
+
+        </div>
+        {%else%}
+        Your Cart is empty.Please add some items into your cart. 
+        {%endif%}
+        <form action='/analyse' method='POST' style='align-items:center'>
+            Enter the month
+            <input type='text' placeholder='Month' name='month'>
+            Enter the Year
+            <input type='text' placeholder='Year' name='year'>
+            <button type='submit' class='btn-primary'>Get report
+        </form>
+        
+    </div>
+
+{%endblock%}

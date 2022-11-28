@@ -1,21 +1,122 @@
-{% extends "base.html" %}{% block title%}LogIn{% endblock %}
+<!DOCTYPE html>
+<html lang="en">
 
-{% block current_login%}active{%endblock%}
-{% block content %}
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>form</title>
+    <link rel="stylesheet" href="./static/css/signin.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script>
+        function printError(elemId, hintMsg) {
+            document.getElementById(elemId).innerHTML = hintMsg;
+        }
+        function validate() {
+            var mail = document.getElementById("text1").value;
+            if (mail == "") {
+                printError("emailErr", "Please enter your email address");
+            } else {
+                // Regular expression for basic email validation
+                var regex = /^\S+@\S+\.\S+$/;
+                if (regex.test(mail) === false) {
+                    printError("emailErr", "Please enter a valid email address");
+                } else {
+                    printError("emailErr", "");
+                }
+            }
+        };
+    </script>
+</head>
 
-
-
-<form method='POST' style="align-items:center;width:50%;margin-left:25%;margin-top:15%" action='/login'>
-    <h3 align="center">Login</h3>
-    <div class="input-group mb-3">
-        <span class="input-group-text" id="basic-addon1">Email</span>
-        <input type="email" class="form-control" id='email' name='email' placeholder="abc@gmail.com" aria-label="Username" aria-describedby="basic-addon1" >
+<body class="IndexBody">
+    <div class="LoginAndRegisterContainer">
+        <div class="LoginContainer">
+            
+            <div class="LoginBody">
+                <a href='/'><button type="button" class="btn-close" aria-label="Close"></button></a>
+                <div class="LoginBodyLeft">
+                    
+        
+                    <h1 class="LoginBodyLefth2"> </h1>
+                    <div class="LoginBodyLeftBottom">
+                        
+                        <h2 class="LoginBodyLeftBottomText">
+                        </h2>
+                        <img src="https://www.mswipe.com/assets/images/signIn_marchant_mswipe_Illustrations.svg" alt="">
+                    </div>
+                </div>
+                {%if Login_success==False%}
+                <div class="LoginBodyRight">
+                    
+                    <h2 class="LoginBodyRighth1">Welcome To panacea.ai</h2>
+                    
+                    
+                    <form method='POST' action='/login'>
+                    
+                        <div class="EmailContainer">
+                            
+                            <div class='danger' style='color:red;align-items:center'>Invalid Username/Passsword</div>
+                            <div class="EmailText">Email Address</div>
+                            
+                            <div class="InputTextBox"> <input type="text" size="40px" id="text1" name='email'placeholder="abc@gmail.com"/></div>
+                            <p class="ErrorTextBox" id="emailErr"></p>
+                            <div class="password">Password </div>
+                            <div class="InputTextBox"> <input type="text" size="40px" id="text1" name='password' placeholder="password@_123"/></div>
+                        </div>
+                        <br>
+                        <div class="registration"> <button align="center" type="submit" class='btn btn-primary' >Submit</button></div>
+                    </form>
+                    <br>
+                    <div class="MainLinesection">
+                        <div class="HorizonalLIne">
+                        </div>
+                        
+                        <div class="ORtext"> create an account </div>
+                        <div class="HorizonalLIne"></div>
+                        
+                    </div>
+                    <br>
+                    <div class="registration">
+                        <a href="/sign-up"><button class='btn btn-primary'> Sign up</button></a>
+                    </div>
+                    {%else%}
+                    <div class="LoginBodyRight">
+                    
+                        <h2 class="LoginBodyRighth1">Welcome To panacea.ai</h2>
+                    <form method='POST' action='/login'>
+                    
+                        <div class="EmailContainer">
+                            
+                            <div class="EmailText">Email Address</div>
+                            
+                            <div class="InputTextBox"> <input type="text" size="40px" id="text1" name='email'placeholder="abc@gmail.com"/></div>
+                            <p class="ErrorTextBox" id="emailErr"></p>
+                            <div class="password">Password </div>
+                            <div class="InputTextBox"> <input type="text" size="40px" id="text1" name='password' placeholder="password@_123"/></div>
+                        </div>
+                        <br>
+                        <div class="registration"> <button align="center" type="submit" class='btn btn-primary' >Submit</button></div>
+                    </form>
+                    <br>
+                    <div class="MainLinesection">
+                        <div class="HorizonalLIne">
+                        </div>
+                        
+                        <div class="ORtext"> create an account </div>
+                        <div class="HorizonalLIne"></div>
+                        
+                    </div>
+                    <br>
+                    <div class="registration">
+                        <a href="/sign-up"><button class='btn btn-primary'> Sign up</button></a>
+                    </div>
+                    {%endif%}
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="input-group mb-3">
-        <span class="input-group-text" id="basic-addon1">Password</span>
-        <input type="password" class="form-control" id='password' name='password' placeholder="password@_123" aria-label="Username" aria-describedby="basic-addon1" >
-    </div>
-    <br/>
-    <button align="center" type="submit" class='btn btn-primary' >Submit</button>
-</form>
-{%endblock%}
+
+</body>
+
+</html>

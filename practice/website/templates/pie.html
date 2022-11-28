@@ -1,0 +1,80 @@
+{% extends "dash_base.html" %}
+{% block heading %}Calories anlysis{%endblock%}
+
+        
+{%block content%}
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="#">Navbar</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav">
+      {% for year in years%}
+      <li class="nav-item active">
+        <a class="nav-link" href="#">{{year}} </a>
+      </li>
+      {% endfor%}
+    </ul>
+  </div>
+</nav>
+<div id="accordion">
+  {% if bl==True %}
+    {% for i,j in res %}
+    
+    <div class="card">
+      <div class="card-header" id="heading{{i}}">
+        <h5 class="mb-0">
+          <button class="btn btn-link" data-toggle="collapse" data-target="#collapse{{i}}" aria-expanded="true" aria-controls="collapse{{i}}">
+            {{i}} Nutrition Report
+          </button>
+        </h5>
+      </div>
+      {%if i== res[0][0] %}
+      <div id="collapse{{i}}" class="collapse show" aria-labelledby="heading{{i}}" data-parent="#accordion">
+      {%else%}
+      <div id="collapse{{i}}" class="collapse" aria-labelledby="heading{{i}}" data-parent="#accordion">
+      {%endif%}
+        <div class="card-body">
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+            <canvas id="myChart{{i}}" style="width:100%;max-width:1000px"></canvas>
+            <script>
+                var xValues = ["Protiens", "Fats", "Carbohydrates", "Sugars","calories","Vitamins"];
+                var yValues = {{j}};
+                var barColors = [
+                  "#b91d47",
+                  "#00aba9",
+                  "#2b5797",
+                  "#e8c3b9",
+                  "#1e7145",
+                  "#2h6819"
+                ];
+                
+                new Chart("myChart{{i}}", {
+                  type: "pie",
+                  data: {
+                    labels: xValues,
+                    datasets: [{
+                      backgroundColor: barColors,
+                      data: yValues
+                    }]
+                  },
+                  options: {
+                    title: {
+                      display: true,
+                      text: "Your monthly report"
+                    }
+                  }
+                });
+                </script>
+            </div>
+        </div>
+      </div>
+      
+    {%endfor%}
+    {%elif bl==False %}
+    <h1>You currently dont have any reports in your summary.<br>Please add grocery items into your cart.</h1>
+    {%endif%}
+    
+</div>
+{% endblock %}

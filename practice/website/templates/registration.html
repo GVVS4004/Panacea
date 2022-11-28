@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>form</title>
+    <link rel="stylesheet" href="./static/css/registration.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script>
+        function printError(elemId, hintMsg) {
+            document.getElementById(elemId).innerHTML = hintMsg;
+        }
+        function validate() {
+            var mail = document.getElementById("text1").value;
+            if (mail == "") {
+                printError("emailErr", "Please enter your email address");
+            } else {
+                // Regular expression for basic email validation
+                var regex = /^\S+@\S+\.\S+$/;
+                if (regex.test(mail) === false) {
+                    printError("emailErr", "Please enter a valid email address");
+                } else {
+                    printError("emailErr", "");
+                }
+            }
+        };
+    </script>
+</head>
+
+<body class="IndexBody">
+    <div class="LoginAndRegisterContainer">
+        <div class="LoginContainer">
+            <div class="LoginBody">
+                <a href='/'><button type="button" class="btn-close" aria-label="Close"></button></a>
+                <div class="LoginBodyLeft">
+                    <h1 class="LoginBodyLefth2"> </h1>
+                    <div class="LoginBodyLeftBottom">
+                    
+                        <h2 class="LoginBodyLeftBottomText">
+                        </h2>
+                        <img src="https://www.gte-media.com/wp-content/uploads/2020/10/4123123.png" alt="">
+                    </div>
+                </div>
+                <div class="LoginBodyRight">
+                    <h2 class="LoginBodyRighth1">Welcome To panacea.ai</h2>
+                   
+                    <form method='POST' action='/sign-up'>
+                        <div class="EmailContainer">
+                            <div class="firstname" > Your first name</div>
+                        
+                            <div class="InputTextBox"> <input type="text" size="40px" id="text1" name='firstname' placeholder="Mark"/></div>
+                            <div class="last name"> Your last name</div>
+                            <div class="InputTextBox"> <input type="text" size="40px" id="text1" name='lastname' placeholder="Zukerberg"/></div>
+                            <div class="phoneno"> Your phone no</div>
+                        
+                            <div class="InputTextBox"> <input type="text" size="40px" id="text1" name='phno' placeholder="9165413322" /></div>
+                            <div class="EmailText"> Your Email Address</div>
+                            <div class="InputTextBox"> <input type="text" size="40px" id="text1" name='email' placeholder="abc@gmail.com" /></div>
+                            <p class="ErrorTextBox" id="emailErr"></p>
+                            <div class="password">Password </div>
+                            <div class="InputTextBox"> <input type="text" size="40px" id="text1" name='password1' placeholder="abc@_123"/></div>
+                            <div class="confirmpasword"> Confirm password</div>
+                            <div class="InputTextBox"> <input type="text" size="40px" id="text1" name='password2' placeholder="abc@_123"/></div>
+                        </div>
+                        <br>
+                        <div class="registration"> <button align="center" type="submit" class='btn btn-primary' >Submit</button></div>
+                    </form>
+                    <br>
+                    <div class="MainLinesection">
+                        <div class="HorizonalLIne">
+                        </div>
+                        <div class="ORtext"> already a member </div>
+                        <div class="HorizonalLIne"></div>
+                        
+                    </div>
+                    <br>
+                    <div class="registration">
+                        <a href="/login"><button align="center" type="submit" class='btn btn-primary' >Sign In</button></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>

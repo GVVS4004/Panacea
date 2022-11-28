@@ -1,0 +1,42 @@
+{% extends "base.html" %}{% block title%}Home{% endblock %}
+{%block content %}
+<h1>This is the Home Page</h1>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+{%for i in lis%}
+
+<canvas id="myChart{{i}}" style="width:100%;max-width:1000px"></canvas>
+<script>
+    var xValues = ["Protiens", "Fats", "Carbohydrates", "Vitamins", "Sugars","calories"];
+    var yValues = {{i}};
+    var barColors = [
+      "#b91d47",
+      "#00aba9",
+      "#2b5797",
+      "#e8c3b9",
+      "#1e7145",
+      "#2h6819"
+    ];
+    
+    new Chart("myChart{{i}}", {
+      type: "pie",
+      data: {
+        labels: xValues,
+        datasets: [{
+          backgroundColor: barColors,
+          data: yValues
+        }]
+      },
+      options: {
+        title: {
+          display: true,
+          text: "Your monthly report"
+        }
+      }
+    });
+    </script>
+{% endfor %}
+{%endblock%}
+
+
+
+{% block current_home%}active{%endblock%}

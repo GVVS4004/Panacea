@@ -1,0 +1,784 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<link rel="apple-touch-icon" sizes="76x76" href="../static/images/apple-icon.png">
+<link rel="icon" type="image/png" href="../static/images/favicon.png">
+<!-- Style CSS -->
+<link rel="stylesheet" href="../static/css/styler.css">
+<!-- Demo CSS (No need to include it into your project) -->
+<link rel="stylesheet" href="../static/css/demo.css">
+
+<title>
+  
+   Material Dashboard 2  by Creative Tim
+  
+
+  
+
+  
+</title>
+
+
+
+<!--     Fonts and icons     -->
+<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900|Roboto+Slab:400,700" />
+
+<!-- Nucleo Icons -->
+<link href="../static/fonts/nucleo-icons.svg" rel="stylesheet" />
+<link href="../static/fonts/nucleo-icons.svg" rel="stylesheet" />
+
+<!-- Font Awesome Icons -->
+<script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
+
+<!-- Material Icons -->
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+
+<!-- CSS Files -->
+
+
+
+<link id="pagestyle" href="../static/css/material-dashboard.css" rel="stylesheet" />
+
+
+
+
+
+  </head>
+
+
+  <body class="g-sidenav-show  bg-gray-100">
+    
+
+    
+
+    
+      <aside class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3   bg-gradient-dark" id="sidenav-main">
+
+  <div class="sidenav-header">
+    <i class="fas fa-times p-3 cursor-pointer text-white opacity-5 position-absolute end-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav"></i>
+    <a class="navbar-brand m-0" href=" https://demos.creative-tim.com/material-dashboard/pages/dashboard " target="_blank">
+      <img src="../static/images/logo-ct.png" class="navbar-brand-img h-100" alt="main_logo">
+      <span class="ms-1 font-weight-bold text-white">Panace Ai</span>
+    </a>
+  </div>
+
+
+  <hr class="horizontal light mt-0 mb-2">
+
+  <div class="collapse navbar-collapse  w-auto " id="sidenav-collapse-main">
+    <ul class="navbar-nav">
+      
+
+      
+        
+
+          
+
+          
+  
+<li class="nav-item">
+  <a class="nav-link text-white " href="{{url_for('views.pie')}}">
+    
+      <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+        <i class="material-icons opacity-10">dashboard</i>
+      </div>
+    
+    <span class="nav-link-text ms-1">Dashboard</span>
+  </a>
+</li>
+
+
+  
+    <li class="nav-item mt-3">
+      <h6 class="ps-4 ms-2 text-uppercase text-xs text-white font-weight-bolder opacity-8">Account pages</h6>
+    </li>
+  
+<li class="nav-item">
+  <a class="nav-link text-white " href="./profile.html">
+    
+      <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+        <i class="material-icons opacity-10">person</i>
+      </div>
+    
+    <span class="nav-link-text ms-1">Profile</span>
+  </a>
+</li>
+
+  
+<li class="nav-item">
+  <a class="nav-link text-white " href="/logout">
+    
+      <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+        <i class="material-icons opacity-10">logout</i>
+      </div>
+    
+    <span class="nav-link-text ms-1">Logout</span>
+  </a>
+</li>   
+      
+    </ul>
+  </div>
+  
+  <div class="sidenav-footer position-absolute w-100 bottom-0 ">
+    <div class="mx-3">
+      <a class="btn bg-gradient-primary mt-4 w-100" href="{{url_for('views.items')}}" type="button">Add Groceries</a>
+    </div>
+    
+  </div>
+  
+</aside>
+
+      <main class="main-content border-radius-lg ">
+        <!-- Navbar -->
+
+		<nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl" id="navbarBlur" data-scroll="true">
+			<div class="container-fluid py-1 px-3">
+			  <nav aria-label="breadcrumb">
+				
+				<ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
+				  <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">Pages</a></li>
+				  <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Dashboard</li>
+				</ol>
+				<h6 class="font-weight-bolder mb-0">Dashboard</h6>
+				
+			  </nav>
+			  <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
+				<div class="ms-md-auto pe-md-3 d-flex align-items-center">
+					
+					<div class="input-group input-group-outline">
+					  <!-- <label class="form-label"></label> -->
+					  <!-- <form method="get" id="search"> -->
+						<input type="text" class="form-control" placeholder="Type Groceries name..." id="data-groceries">
+					<!-- </form> -->
+					</div>
+					
+				</div>
+				<ul class="navbar-nav  justify-content-end">
+				  <li class="nav-item d-flex align-items-center">
+					<a class="btn btn-outline-primary btn-sm mb-0 me-3" target="_blank" id="search">Get Info</a>
+				  </li>
+				  <li class="nav-item d-flex align-items-center">
+					<a href="/logout" class="nav-link text-body font-weight-bold px-0">
+					  <i class="fa fa-user me-sm-1"></i>
+					  
+					  <span class="d-sm-inline d-none">Log Out</span>
+					  
+					</a>
+				  </li>
+				
+				  </li>
+				</ul>
+			  </div>
+			</div>
+		  </nav>
+
+<!-- End Navbar -->
+
+
+        
+
+
+<main>
+	<!-- Start DEMO HTML (Use the following code into your project)-->
+<header id="site-header">
+	   <div class="container">
+		   <h1>Shopping cart <span>[</span> <em>by Panace.ai</em> <span class="last-span is-open">]</span></h1>
+	   </div>
+   </header>
+   <form id='insert_items' method='POST'action='/items' >
+   <div class="container">
+	   
+	   <section id="cart"> 
+		   <article class="product">
+			   <header>
+				   <a>
+					   <img src="../static/images/urad_dal.jpg" alt="Keyboard">
+				   </a>
+			   </header>
+
+			   <div class="content">
+
+				   <h1>Urad Dal</h1>
+
+				   <!-- Lorem ipsum dolor sit amet, consectetur adipisicing elit. Soluta, numquam quis perspiciatis ea ad omnis provident laborum dolore in atque. -->
+
+				   <!-- <div title="You have selected this product to be shipped in the color yellow." style="top: 0" class="color yellow"></div> -->
+				   <!-- <div style="top: 43px" class="type small">XXL</div> -->
+			   </div>
+
+			   
+				   <footer class="content">
+				   
+					   <span class="qt-minus">-</span>
+					   <span class="qt">0</span>
+					   <span class="qt-plus">+</span>
+   
+					   <h2 class="full-price">
+						   0cal
+					   </h2>
+   
+					   <h2 class="price">
+						   35cal
+					   </h2>
+				   </footer>
+		   </article>
+
+		   <article class="product">
+			   <header>
+				   <a>
+					   <img src="../static/images/tomato.jpg" alt="Keyboard">
+				   </a>
+			   </header>
+
+			   <div class="content">
+
+				   <h1>Tomato</h1>
+
+				   <!-- Lorem ipsum dolor sit amet, consectetur adipisicing elit. Soluta, numquam quis perspiciatis ea ad omnis provident laborum dolore in atque. -->
+
+				   <!-- <div title="You have selected this product to be shipped in the color red." style="top: 0" class="color red"></div> -->
+				   <!-- <div title="You have selected this product to be shipped sized Small."  style="top: 43px" class="type small">Small</div> -->
+			   </div>
+
+			   <footer class="content">
+				   
+				   <span class="qt-minus">-</span>
+				   <span class="qt">0</span>
+				   <span class="qt-plus">+</span>
+
+				   <h2 class="full-price">
+					   0cal
+				   </h2>
+
+				   <h2 class="price">
+					   35cal
+				   </h2>
+			   </footer>
+		   </article>
+
+		   <article class="product">
+			   <header>
+				   <a>
+					   <img src="../static/images/oil.jpg" alt="Handfree">
+				   </a>
+			   </header>
+
+			   <div class="content">
+
+				   <h1>Oil</h1>
+
+				   <!-- Lorem ipsum dolor sit amet, consectetur adipisicing elit. Soluta, numquam quis perspiciatis ea ad omnis provident laborum dolore in atque. -->
+
+				   <!-- <div title="You have selected this product to be shipped in the color blue." style="top: 0" class="color blue"></div> -->
+				   <!-- <div style="top: 43px" class="type small">Large</div> -->
+			   </div>
+
+			   <footer class="content">
+				   
+				   <span class="qt-minus">-</span>
+				   <span class="qt">0</span>
+				   <span class="qt-plus">+</span>
+
+				   <h2 class="full-price">
+					   0cal
+				   </h2>
+
+				   <h2 class="price">
+					   35cal
+				   </h2>
+			   </footer>
+		   </article>
+		   <article class="product">
+			   <header>
+				   <a>
+					   <img src="../static/images/apple.jpg" alt="Handfree">
+				   </a>
+			   </header>
+
+			   <div class="content">
+
+				   <h1>Apple</h1>
+
+				   <!-- Lorem ipsum dolor sit amet, consectetur adipisicing elit. Soluta, numquam quis perspiciatis ea ad omnis provident laborum dolore in atque. -->
+
+				   <!-- <div title="You have selected this product to be shipped in the color blue." style="top: 0" class="color blue"></div> -->
+				   <!-- <div style="top: 43px" class="type small">Large</div> -->
+			   </div>
+
+			   <footer class="content">
+				   
+				   <span class="qt-minus">-</span>
+				   <span class="qt">0</span>
+				   <span class="qt-plus">+</span>
+
+				   <h2 class="full-price">
+					   0cal
+				   </h2>
+
+				   <h2 class="price">
+					   35cal
+				   </h2>
+			   </footer>
+		   </article>
+		   <article class="product">
+			   <header>
+				   <a>
+					   <img src="../static/images/mango.jpg" alt="Handfree">
+				   </a>
+			   </header>
+
+			   <div class="content">
+
+				   <h1>Mango</h1>
+
+				   <!-- Lorem ipsum dolor sit amet, consectetur adipisicing elit. Soluta, numquam quis perspiciatis ea ad omnis provident laborum dolore in atque. -->
+
+				   <!-- <div title="You have selected this product to be shipped in the color blue." style="top: 0" class="color blue"></div> -->
+				   <!-- <div style="top: 43px" class="type small">Large</div> -->
+			   </div>
+
+			   <footer class="content">
+				   
+				   <span class="qt-minus">-</span>
+				   <span class="qt">0</span>
+				   <span class="qt-plus">+</span>
+
+				   <h2 class="full-price">
+					   0cal
+				   </h2>
+
+				   <h2 class="price">
+					   35cal
+				   </h2>
+			   </footer>
+		   </article>
+		   <article class="product">
+			   <header>
+				   <a>
+					   <img src="../static/images/carrot.jpg" alt="Handfree">
+				   </a>
+			   </header>
+
+			   <div class="content">
+
+				   <h1>Carrot</h1>
+
+				   <!-- Lorem ipsum dolor sit amet, consectetur adipisicing elit. Soluta, numquam quis perspiciatis ea ad omnis provident laborum dolore in atque. -->
+
+				   <!-- <div title="You have selected this product to be shipped in the color blue." style="top: 0" class="color blue"></div> -->
+				   <!-- <div style="top: 43px" class="type small">Large</div> -->
+			   </div>
+
+			   <footer class="content">
+				   
+				   <span class="qt-minus">-</span>
+				   <span class="qt">0</span>
+				   <span class="qt-plus">+</span>
+
+				   <h2 class="full-price">
+					   0cal
+				   </h2>
+
+				   <h2 class="price">
+					   35cal
+				   </h2>
+			   </footer>
+		   </article>
+		   <article class="product">
+			   <header>
+				   <a>
+					   <img src="../static/images/beetroot.jpg" alt="Handfree">
+				   </a>
+			   </header>
+
+			   <div class="content">
+
+				   <h1>Beetroot</h1>
+
+				   <!-- Lorem ipsum dolor sit amet, consectetur adipisicing elit. Soluta, numquam quis perspiciatis ea ad omnis provident laborum dolore in atque. -->
+
+				   <!-- <div title="You have selected this product to be shipped in the color blue." style="top: 0" class="color blue"></div> -->
+				   <!-- <div style="top: 43px" class="type small">Large</div> -->
+			   </div>
+
+			   <footer class="content">
+				   
+				   <span class="qt-minus">-</span>
+				   <span class="qt">0</span>
+				   <span class="qt-plus">+</span>
+
+				   <h2 class="full-price">
+					   0cal
+				   </h2>
+
+				   <h2 class="price">
+					   35cal
+				   </h2>
+			   </footer>
+		   </article>
+		   <article class="product">
+			   <header>
+				   <a>
+					   <img src="../static/images/cabbage.jpg" alt="Handfree">
+				   </a>
+			   </header>
+
+			   <div class="content">
+
+				   <h1>Cabbage</h1>
+
+				   <!-- Lorem ipsum dolor sit amet, consectetur adipisicing elit. Soluta, numquam quis perspiciatis ea ad omnis provident laborum dolore in atque. -->
+
+				   <!-- <div title="You have selected this product to be shipped in the color blue." style="top: 0" class="color blue"></div> -->
+				   <!-- <div style="top: 43px" class="type small">Large</div> -->
+			   </div>
+
+			   <footer class="content">
+				   
+				   <span class="qt-minus">-</span>
+				   <span class="qt">0</span>
+				   <span class="qt-plus">+</span>
+
+				   <h2 class="full-price">
+					   0cal
+				   </h2>
+
+				   <h2 class="price">
+					   35cal
+				   </h2>
+			   </footer>
+		   </article>
+		   <article class="product">
+			   <header>
+				   <a>
+					   <img src="../static/images/rice.jpg" alt="Handfree">
+				   </a>
+			   </header>
+
+			   <div class="content">
+
+				   <h1>Rice</h1>
+
+				   <!-- Lorem ipsum dolor sit amet, consectetur adipisicing elit. Soluta, numquam quis perspiciatis ea ad omnis provident laborum dolore in atque. -->
+
+				   <!-- <div title="You have selected this product to be shipped in the color blue." style="top: 0" class="color blue"></div> -->
+				   <!-- <div style="top: 43px" class="type small">Large</div> -->
+			   </div>
+
+			   <footer class="content">
+				   
+				   <span class="qt-minus">-</span>
+				   <span class="qt">0</span>
+				   <span class="qt-plus">+</span>
+
+				   <h2 class="full-price">
+					   0cal
+				   </h2>
+
+				   <h2 class="price">
+					   35cal
+				   </h2>
+			   </footer>
+		   </article>
+		   <article class="product">
+			   <header>
+				   <a>
+					   <img src="../static/images/atta.jpg" alt="Handfree">
+				   </a>
+			   </header>
+
+			   <div class="content">
+
+				   <h1>Atta</h1>
+
+				   <!-- Lorem ipsum dolor sit amet, consectetur adipisicing elit. Soluta, numquam quis perspiciatis ea ad omnis provident laborum dolore in atque. -->
+
+				   <!-- <div title="You have selected this product to be shipped in the color blue." style="top: 0" class="color blue"></div> -->
+				   <!-- <div style="top: 43px" class="type small">Large</div> -->
+			   </div>
+
+			   <footer class="content">
+				   
+				   <span class="qt-minus">-</span>
+				   <span class="qt">0</span>
+				   <span class="qt-plus">+</span>
+
+				   <h2 class="full-price">
+					   0cal
+				   </h2>
+
+				   <h2 class="price">
+					   35cal
+				   </h2>
+			   </footer>
+		   </article>
+		   <article class="product">
+			   <header>
+				   <a>
+					   <img src="../static/images/milk.jpg" alt="Handfree">
+				   </a>
+			   </header>
+
+			   <div class="content">
+
+				   <h1>Milk</h1>
+
+				   <!-- Lorem ipsum dolor sit amet, consectetur adipisicing elit. Soluta, numquam quis perspiciatis ea ad omnis provident laborum dolore in atque. -->
+
+				   <!-- <div title="You have selected this product to be shipped in the color blue." style="top: 0" class="color blue"></div> -->
+				   <!-- <div style="top: 43px" class="type small">Large</div> -->
+			   </div>
+
+			   <footer class="content">
+				   
+				   <span class="qt-minus">-</span>
+				   <span class="qt">0</span>
+				   <span class="qt-plus">+</span>
+
+				   <h2 class="full-price">
+					   0cal
+				   </h2>
+
+				   <h2 class="price">
+					   35cal
+				   </h2>
+			   </footer>
+		   </article>
+		   <article class="product">
+			   <header>
+				   <a>
+					   <img src="../static/images/curd.jpg" alt="Handfree">
+				   </a>
+			   </header>
+
+			   <div class="content">
+
+				   <h1>Curd</h1>
+
+				   <!-- Lorem ipsum dolor sit amet, consectetur adipisicing elit. Soluta, numquam quis perspiciatis ea ad omnis provident laborum dolore in atque. -->
+
+				   <!-- <div title="You have selected this product to be shipped in the color blue." style="top: 0" class="color blue"></div> -->
+				   <!-- <div style="top: 43px" class="type small">Large</div> -->
+			   </div>
+
+			   <footer class="content">
+				   
+				   <span class="qt-minus">-</span>
+				   <span class="qt">0</span>
+				   <span class="qt-plus">+</span>
+
+				   <h2 class="full-price">
+					   0cal
+				   </h2>
+
+				   <h2 class="price">
+					   35cal
+				   </h2>
+			   </footer>
+		   </article>
+		   <article class="product">
+			   <header>
+				   <a>
+					   <img src="../static/images/icecream.jpg" alt="Handfree">
+				   </a>
+			   </header>
+
+			   <div class="content">
+
+				   <h1>Icecream</h1>
+
+				   <!-- Lorem ipsum dolor sit amet, consectetur adipisicing elit. Soluta, numquam quis perspiciatis ea ad omnis provident laborum dolore in atque. -->
+
+				   <!-- <div title="You have selected this product to be shipped in the color blue." style="top: 0" class="color blue"></div> -->
+				   <!-- <div style="top: 43px" class="type small">Large</div> -->
+			   </div>
+
+			   <footer class="content">
+				   
+				   <span class="qt-minus">-</span>
+				   <span class="qt">0</span>
+				   <span class="qt-plus">+</span>
+
+				   <h2 class="full-price">
+					   0cal
+				   </h2>
+
+				   <h2 class="price">
+					   35cal
+				   </h2>
+			   </footer>
+		   </article>
+		   <article class="product">
+			   <header>
+				   <a>
+					   <img src="../static/images/chicken.jpg" alt="Handfree">
+				   </a>
+			   </header>
+
+			   <div class="content">
+
+				   <h1>Chicken</h1>
+
+				   <!-- Lorem ipsum dolor sit amet, consectetur adipisicing elit. Soluta, numquam quis perspiciatis ea ad omnis provident laborum dolore in atque. -->
+
+				   <!-- <div title="You have selected this product to be shipped in the color blue." style="top: 0" class="color blue"></div> -->
+				   <!-- <div style="top: 43px" class="type small">Large</div> -->
+			   </div>
+
+			   <footer class="content">
+				   
+				   <span class="qt-minus">-</span>
+				   <span class="qt">0</span>
+				   <span class="qt-plus">+</span>
+
+				   <h2 class="full-price">
+					   0cal
+				   </h2>
+
+				   <h2 class="price">
+					   35cal
+				   </h2>
+			   </footer>
+		   </article>
+		   <article class="product">
+			   <header>
+				   <a>
+					   <img src="../static/images//mutton.jpg" alt="Handfree">
+				   </a>
+			   </header>
+
+			   <div class="content">
+
+				   <h1>Mutton</h1>
+
+				   <!-- Lorem ipsum dolor sit amet, consectetur adipisicing elit. Soluta, numquam quis perspiciatis ea ad omnis provident laborum dolore in atque. -->
+
+				   <!-- <div title="You have selected this product to be shipped in the color blue." style="top: 0" class="color blue"></div> -->
+				   <!-- <div style="top: 43px" class="type small">Large</div> -->
+			   </div>
+
+			   <footer class="content">
+				   
+				   <span class="qt-minus">-</span>
+				   <span class="qt">0</span>
+				   <span class="qt-plus">+</span>
+
+				   <h2 class="full-price">
+					   0cal
+				   </h2>
+
+				   <h2 class="price">
+					   35cal
+				   </h2>
+			   </footer>
+		   </article>
+		   <article class="product">
+			   <header>
+				   <a>
+					   <img src="../static/images/cheese.jpg" alt="Handfree">
+				   </a>
+			   </header>
+
+			   <div class="content">
+
+				   <h1>Cheese</h1>
+
+				   <!-- Lorem ipsum dolor sit amet, consectetur adipisicing elit. Soluta, numquam quis perspiciatis ea ad omnis provident laborum dolore in atque. -->
+
+				   <!-- <div title="You have selected this product to be shipped in the color blue." style="top: 0" class="color blue"></div> -->
+				   <!-- <div style="top: 43px" class="type small">Large</div> -->
+			   </div>
+
+			   <footer class="content">
+				   
+				   <span class="qt-minus">-</span>
+				   <span class="qt">0</span>
+				   <span class="qt-plus">+</span>
+
+				   <h2 class="full-price">
+					   0cal
+				   </h2>
+
+				   <h2 class="price">
+					   35cal
+				   </h2>
+			   </footer>
+		   </article>
+
+	   </section>
+   
+
+   </div>
+
+   <footer id="site-footer">
+	   <div class="container clearfix">
+
+		   <div class="left">
+			   <h2 class="subtotal">Total Calories: <span>0</span></h2>
+			   <div ><button type='submit'class='price1'>Add to Cart</button></div>
+			   <div ><button class='price2' style='color: #fff;'><a href='/pie' id='price2'>Go back</a></button></div>
+			   <!-- <h3 class="tax">Taxes (5%): <span>8.2</span></h3> -->
+			   <!-- <h3 class="shipping">Shipping: <span>5.00</span></h3> -->
+		   </div>
+
+		   <!-- <div class="right">
+				<h1 class="total">Total: <span>177.16</span></h1> 
+			   <a class="btn">Go to Cart</a>
+		   </div> -->
+
+	   </div>
+   </footer>
+   </form>
+	<!-- END EDMO HTML (Happy Coding!)-->
+</main>
+
+	 
+ <!-- <footer class="credit">Author: Žiga Miklič - Distributed By: <a title="Awesome web design code & scripts" href="https://www.codehim.com?source=demo-page" target="_blank">CodeHim</a></footer> -->
+ 
+ <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+   <script  src="../static/js/script.js"></script> 
+
+
+
+                <footer class="footer py-4 ">
+  <div class="container-fluid">
+    <div class="row align-items-center justify-content-lg-between">
+      <div class="col-lg-6 mb-lg-0 mb-4">
+        <div class="copyright text-center text-sm text-muted text-lg-start">
+          © <script>
+            document.write(new Date().getFullYear())
+          </script>,
+          made with <i class="fa fa-heart"></i> by <span><strong>Team 38</strong></span> 
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+            </div>
+
+         
+       </main>
+    
+  </body>
+  <script>
+    let btn = document.getElementById("search");
+    let data = document.getElementById("data-groceries");
+    // alert(d.innerHTML);
+    btn.addEventListener("click", () => {
+      console.log(data.value);
+      window.location.href=`item/${data.value}`
+    })
+    let srch=document.getElementById('srch');
+    srch.href=``
+  </script>
+
+</html>

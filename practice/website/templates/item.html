@@ -1,0 +1,51 @@
+{%extends 'dash_base.html' %}
+{%block heading%}Items{%endblock%}
+{% block content%}
+<div class="container">
+    {% if error==False %}
+    <div class="row">
+        {% for i in items %}
+        <div class='col-sm-3'>
+            <div class="card" style="width: 19rem;border:solid black;margin:5px">
+                {%if i['src']==None %}
+                <img class="card-img-top" src="{{url_for('static',filename='images/googlelens.png')}}" style='height:17rem'>
+                {%else%}
+                <img class="card-img-top" src="{{i['src']}}" style='height:17rem'>
+                {%endif%}
+                <div class="card-body">
+                    <h5 class="card-title"><strong >{{i['name']}}</strong></h5>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item"><pre><strong>Calories</strong>          {{i['cal']}}Kcal</pre></li>
+                        <li class="list-group-item"><pre><strong>Fats</strong>              {{i['fats']}}g</pre></li>
+                        <li class="list-group-item"><pre><strong>Sugars</strong>            {{i['sug']}}g</pre></li>
+                        <li class="list-group-item"><pre><strong>Protiens</strong>          {{i['pro']}}g</pre></li>
+                        <li class="list-group-item"><pre><strong>Carbohydrates</strong>     {{i['carbs']}}g</pre></li>
+                    </ul>
+                    <div class="card-body">
+                    <form method='POST' action='{{url_for('views.addcart',food_id=i['food_id'])}}'>
+                    <input type='hidden'id='{{i['food_id']}}' name='foodid{{i['food_id']}}'><script>var id=document.getElementById('foodid{{i['food_id']}}').value=`{{i['food_id']}}`;
+                        console.log(document.getElementById('foodid'));
+                    </script>
+                    <input type='hidden'id='foodname{{i['food_id']}}' name='foodname{{i['food_id']}}' value='{{i['name']}}'>
+                    <input type='hidden' id='foodinfo{{i['food_id']}}' name='foodinfo{{i['food_id']}}' value='{{i['nutrition']}}'>
+                    <input type='text' name='wt' id='wt'>g
+                    <button type='submit' class='btn-primary'>Add to cart</a>
+                    </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+        {%endfor%}
+    </div>
+    {%else%}
+    <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-emoji-frown" viewBox="0 0 16 16" style='background-color:yellow;'>
+        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+        <path d="M4.285 12.433a.5.5 0 0 0 .683-.183A3.498 3.498 0 0 1 8 10.5c1.295 0 2.426.703 3.032 1.75a.5.5 0 0 0 .866-.5A4.498 4.498 0 0 0 8 9.5a4.5 4.5 0 0 0-3.898 2.25.5.5 0 0 0 .183.683zM7 6.5C7 7.328 6.552 8 6 8s-1-.672-1-1.5S5.448 5 6 5s1 .672 1 1.5zm4 0c0 .828-.448 1.5-1 1.5s-1-.672-1-1.5S9.448 5 10 5s1 .672 1 1.5z"/>
+      </svg>  We are sorry!..
+      <br>
+       Entered item not found.Please enter the item name correctly.
+    {%endif%}
+</div>
+    
+{%endblock%}

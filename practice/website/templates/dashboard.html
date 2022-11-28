@@ -1,0 +1,91 @@
+{% extends "dash_base.html" %}
+{% block heading %}Calories anlysis{%endblock%}
+
+        
+{%block content%}
+
+<div id="accordion" >
+    {% if bl==True %}
+        {% for year,yearvalue in res.items()%}
+        
+        
+        <div class="card">
+            <div class="card-header" id="heading{{year}}" >
+                <h5 class="mb-0">
+                    <button class="btn btn-link" data-toggle="collapse" data-target="#collapse{{year}}" aria-expanded="true" aria-controls="collapse{{year}}">
+                    {{year}} Nutrition Report
+                    </button>
+                </h5>
+            </div>
+            {% for months,monthvalue in yearvalue.items()%}
+            <div id="collapse{{year}}" class='card'>
+            
+                    <div class="card-header" id="heading{{year}}{{months}}" >
+                        <h5 class="mb-0">
+                            <button class="btn btn-link" data-toggle="collapse" data-target="#collapse{{year}}{{months}}" aria-expanded="true" aria-controls="collapse{{year}}{{months}}" style='color:green'>
+                            {{months}} Nutrition Report
+                            </button>
+                        </h5>
+                    </div>
+
+                    <div id="collapse{{year}}{{months}}" class="collapse" aria-labelledby="heading{{year}}{{months}}" data-parent="#card">
+                
+                    
+                    <div class="card-body">
+                        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+                        <canvas id="myChart{{year}}{{months}}" style="width:100%;max-width:1000px"></canvas>
+                        
+                        
+                        <script>
+                            var xValues = ["Protiens", "Fats", "Carbohydrates", "Sugars","calories","Vitamins"];
+                            
+                            var yValues = [];
+                            {% for info,infovalue in monthvalue.items() %}
+                            yValues.push({{infovalue}});
+                            {%endfor%}
+                            console.log(yValues);
+                            var barColors = [
+                            "#b91d47",
+                            "#00aba9",  
+                            "#2b5797",
+                            "#e8c3b9",
+                            "#1e7145",
+                            "#2h6819"
+                            ];
+                            
+                            new Chart("myChart{{year}}{{months}}", {
+                            type: "pie",
+                            data: {
+                                labels: xValues,
+                                datasets: [{
+                                backgroundColor: barColors,
+                                data: yValues
+                                }]
+                            },
+                            options: {
+                                title: {
+                                display: true,
+                                text: "Your monthly report"
+                                }
+                            }
+                            });
+                            
+                        </script>
+                            
+                           
+                </div>
+                
+                </div>
+                {%endfor%}
+                </div>
+            </div>
+        </div>
+        
+        
+        {%endfor%}
+    {%elif bl==False %}
+    <h1>You currently dont have any reports in your summary.<br>Please add grocery items into your cart.</h1>
+    {%endif%}
+    
+</div>
+{% endblock %}

@@ -1,42 +1,61 @@
-{% extends "base.html" %}{% block title%}Home{% endblock %}
-{%block content %}
-<h1>This is the Home Page</h1>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
-{%for i in lis%}
+<!DOCTYPE html>
+<html lang="en">
 
-<canvas id="myChart{{i}}" style="width:100%;max-width:1000px"></canvas>
-<script>
-    var xValues = ["Protiens", "Fats", "Carbohydrates", "Vitamins", "Sugars","calories"];
-    var yValues = {{i}};
-    var barColors = [
-      "#b91d47",
-      "#00aba9",
-      "#2b5797",
-      "#e8c3b9",
-      "#1e7145",
-      "#2h6819"
-    ];
-    
-    new Chart("myChart{{i}}", {
-      type: "pie",
-      data: {
-        labels: xValues,
-        datasets: [{
-          backgroundColor: barColors,
-          data: yValues
-        }]
-      },
-      options: {
-        title: {
-          display: true,
-          text: "Your monthly report"
-        }
-      }
-    });
-    </script>
-{% endfor %}
-{%endblock%}
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>panace.ai</title>
+  <link rel="stylesheet" href="./static/css/home.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+    integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"/>
+</head>
 
+<body>
+  <header>
+    <div class="Nav-bar">
+      <img class="image" src="./static/images/logo.png" alt="" />
+      <div>
+        <ol class="Nav-items" type="none">
+          <li>Home</li>
+          <li>About Us</li>
+          <li>Contact Us</li>
+          <li>
 
+            <a href="{{url_for('auth.sign_up')}}" id='register' >
+              Login/Register</a>
 
-{% block current_home%}active{%endblock%}
+          </li>
+        </ol>
+      </div>
+    </div>
+  </header>
+  <div class="middle_part">
+    <div class="groww_middle_left">
+      <h2 class="investin">Your GROCERY BASKET with
+        <div class="slides_vertical">
+          <span class="stocks_color">Nutrition</span>
+          <span class="mutualfunds_color">calories</span>
+          <span class="futuresoptions_color">mineral</span>
+          <span class="usstocks_color">vitamins</span>
+          <span class="ipo_color">fats</span>
+          <span class="fds_color">other</span>
+        </div>
+      </h2>
+      <div class="groww_middle_left_text">Get your<span style="font-weight: bold;"> grocery basket</span> with nutrition values.
+        <br>
+        Start login today</div>
+    <div class="groww_started_container">
+        <a href="/sign-up"><button class="groww_startedbutton">Get Started</button></a>
+    </div>
+    </div>
+
+    <div class="groww_middle_right">
+      <img src="./static/images/basket.png" alt="">
+    </div>
+  </div>
+
+</body>
+
+</html>

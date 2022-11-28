@@ -10,6 +10,7 @@ class crete_app():
         app=Flask(__name__)
         app.config['SECRET_KEY']='ivnfidoivndfvindvfosjfv'
         app.config['MONGO_URI']='mongodb://localhost:27017/Users'
+        app.config['UPLOAD_FOLDER']='static/image_uploads'
         db.init_app(app)
         
 

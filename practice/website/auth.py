@@ -11,21 +11,20 @@ auth =Blueprint('auth',__name__)
 
 @auth.route('/login',methods=['POST','GET'])
 def login():
+    # Login_success=None
     if request.method=='POST':
         email = request.form["email"]
         password = request.form["password"]
         find_user = db.db.user.find_one({"email": email})
         if User.login_valid(email, password):
             loguser = User(find_user["firstname"],find_user["lastname"],find_user["email"],find_user["phno"],find_user["password"],find_user['_id'])
-            print(loguser,'loguser')
             login_user(loguser, remember=True)
-            print(current_user,'currentuser')
             flash('You have been logged in!', 'success')
-            return redirect(url_for('views.home'))
+            return redirect(url_for('views.pie'))
         else:
             flash('Login Unsuccessful. Please check email and password', 'error')
-    print(current_user)
-    return render_template('login.html',user=current_user)
+            return render_template('login.html',Login_success=False)
+    return render_template('login.html',user=current_user ,Login_success=True)
 
 @auth.route('/logout')
 @login_required
@@ -64,10 +63,10 @@ def sign_up():
                 loguser = User(find_user["firstname"],find_user["lastname"],find_user["email"],find_user["phno"],find_user["password"],find_user['_id'])
                 login_user(loguser,remember=True)
                 flash(f'Account created ', 'success')
-                return redirect(url_for('views.home'))
+                return redirect(url_for('views.pie'))
             else:
                 flash(f'Account already exists', 'error')
-    return render_template('sign_up.html',user=current_user)
+    return render_template('registration.html',user=current_user)
 
 
 
