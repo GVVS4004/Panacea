@@ -2,7 +2,8 @@
 {%block heading%}My CART{%endblock%}
 {%block content%}
     <div class="container">
-        {%if items!=None%}
+        {%if empty!=True%}
+        If any items are missing then please add them manually.Sorry for the inconvinience.
         <div class="row">
             {% for i in items %}
             <div class='col-sm-3'>
@@ -36,11 +37,9 @@
             </div>
             <br>
             {%endfor%}
-
+        
+            
         </div>
-        {%else%}
-        Your Cart is empty.Please add some items into your cart. 
-        {%endif%}
         <form action='/analyse' method='POST' style='align-items:center'>
             Enter the month
             <input type='text' placeholder='Month' name='month'>
@@ -48,6 +47,14 @@
             <input type='text' placeholder='Year' name='year'>
             <button type='submit' class='btn-primary'>Get report
         </form>
+        
+        {%elif empty==True%}
+        {%if msg==True%}
+        Please the Upload file clearly.
+        {%endif%}
+        Your Cart is empty.Please add some items into your cart. 
+        {%endif%}
+        
         
     </div>
 
