@@ -1,43 +1,198 @@
 {%extends 'dash_base.html' %}
 {%block heading%}Items{%endblock%}
+{%block head%}<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>{%endblock%}
 {% block content%}
+<style>
+    @import url('https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
+    #team {
+        background: #eee !important;
+    }
+    
+    .btn-primary:hover,
+    .btn-primary:focus {
+        background-color: #108d6f;
+        border-color: #108d6f;
+        box-shadow: none;
+        outline: none;
+    }
+    
+    .btn-primary {
+        color: #fff;
+        background-color: #007b5e;
+        border-color: #007b5e;
+    }
+    
+    section {
+        padding: 60px 0;
+    }
+    
+    section .section-title {
+        text-align: center;
+        color: #007b5e;
+        margin-bottom: 50px;
+        text-transform: uppercase;
+    }
+    
+    #team .card {
+        border: none;
+        background: #ffffff;
+    }
+    
+    .image-flip:hover .backside,
+    .image-flip.hover .backside {
+        -webkit-transform: rotateY(0deg);
+        -moz-transform: rotateY(0deg);
+        -o-transform: rotateY(0deg);
+        -ms-transform: rotateY(0deg);
+        transform: rotateY(0deg);
+        border-radius: .25rem;
+    }
+    
+    .image-flip:hover .frontside,
+    .image-flip.hover .frontside {
+        -webkit-transform: rotateY(180deg);
+        -moz-transform: rotateY(180deg);
+        -o-transform: rotateY(180deg);
+        transform: rotateY(180deg);
+    }
+    
+    .mainflip {
+        -webkit-transition: 1s;
+        -webkit-transform-style: preserve-3d;
+        -ms-transition: 1s;
+        -moz-transition: 1s;
+        -moz-transform: perspective(1000px);
+        -moz-transform-style: preserve-3d;
+        -ms-transform-style: preserve-3d;
+        transition: 1s;
+        transform-style: preserve-3d;
+        position: relative;
+    }
+    
+    .frontside {
+        position: relative;
+        -webkit-transform: rotateY(0deg);
+        -ms-transform: rotateY(0deg);
+        z-index: 2;
+        margin-bottom: 30px;
+    }
+    
+    .backside {
+        position: absolute;
+        top: 0;
+        left: 0;
+        background: white;
+        -webkit-transform: rotateY(-180deg);
+        -moz-transform: rotateY(-180deg);
+        -o-transform: rotateY(-180deg);
+        -ms-transform: rotateY(-180deg);
+        transform: rotateY(-180deg);
+        -webkit-box-shadow: 5px 7px 9px -4px rgb(158, 158, 158);
+        -moz-box-shadow: 5px 7px 9px -4px rgb(158, 158, 158);
+        box-shadow: 5px 7px 9px -4px rgb(158, 158, 158);
+    }
+    
+    .frontside,
+    .backside {
+        -webkit-backface-visibility: hidden;
+        -moz-backface-visibility: hidden;
+        -ms-backface-visibility: hidden;
+        backface-visibility: hidden;
+        -webkit-transition: 1s;
+        -webkit-transform-style: preserve-3d;
+        -moz-transition: 1s;
+        -moz-transform-style: preserve-3d;
+        -o-transition: 1s;
+        -o-transform-style: preserve-3d;
+        -ms-transition: 1s;
+        -ms-transform-style: preserve-3d;
+        transition: 1s;
+        transform-style: preserve-3d;
+    }
+    
+    .frontside .card,
+    .backside .card {
+        min-height: 312px;
+    }
+    
+    .backside .card a {
+        font-size: 18px;
+        color: #007b5e !important;
+    }
+    
+    .frontside .card .card-title,
+    .backside .card .card-title {
+        color: #007b5e !important;
+    }
+    
+    .frontside .card .card-body img {
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+    }
+</style>
+
 <div class="container">
     {% if error==False %}
     <div class="row">
         {% for i in items %}
-        <div class='col-sm-3'>
-            <div class="card" style="width: 19rem;border:solid black;margin:5px">
-                {%if i['src']==None %}
-                <img class="card-img-top" src="{{url_for('static',filename='images/googlelens.png')}}" style='height:17rem'>
-                {%else%}
-                <img class="card-img-top" src="{{i['src']}}" style='height:17rem'>
-                {%endif%}
-                <div class="card-body">
-                    <h5 class="card-title"><strong >{{i['name']}}</strong></h5>
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item"><pre><strong>Calories</strong>          {{i['cal']}}Kcal</pre></li>
-                        <li class="list-group-item"><pre><strong>Fats</strong>              {{i['fats']}}g</pre></li>
-                        <li class="list-group-item"><pre><strong>Sugars</strong>            {{i['sug']}}g</pre></li>
-                        <li class="list-group-item"><pre><strong>Protiens</strong>          {{i['pro']}}g</pre></li>
-                        <li class="list-group-item"><pre><strong>Carbohydrates</strong>     {{i['carbs']}}g</pre></li>
-                    </ul>
-                    <div class="card-body">
-                    <form method='POST' action='{{url_for('views.addcart',food_id=i['food_id'])}}'>
-                    <input type='hidden'id='{{i['food_id']}}' name='foodid{{i['food_id']}}'><script>var id=document.getElementById('foodid{{i['food_id']}}').value=`{{i['food_id']}}`;
-                        console.log(document.getElementById('foodid'));
-                    </script>
-                    <input type='hidden'id='foodname{{i['food_id']}}' name='foodname{{i['food_id']}}' value='{{i['name']}}'>
-                    <input type='hidden' id='foodinfo{{i['food_id']}}' name='foodinfo{{i['food_id']}}' value='{{i['nutrition']}}'>
-                    <input type='text' name='wt' id='wt'>g
-                    <button type='submit' class='btn-primary'>Add to cart</a>
-                    </form>
+        <div class="col-xs-12 col-sm-6 col-md-3">
+            <div class="image-flip" ontouchstart="this.classList.toggle('hover');" style='height:29rem'>
+                
+                <div class="mainflip" style='height:29rem'>
+                    <div class="frontside" style='height:30rem'>
+                        
+                            <div class="card" style="width: 19rem;height:29rem">
+                                <div class="card-body text-center mt-4">
+                                    {%if i['src']==None %}
+                                    <p><img class=" img-fluid" src="{{url_for('static',filename='images/googlelens.png')}}" alt="card image" style='height:17rem'><h4 class="card-title">{{i['name']}}</h4></p>
+                                    {%else%}
+                                    <p><img class=" img-fluid" src="{{i['src']}}" alt="card image" style='height:17rem'><h4 class="card-title">{{i['name']}}</h4></p>
+                                    {%endif%}
+                                    
+                                </div>
+                            </div>
+                        
+                    </div>
+                    <div class="backside" style='height:29rem' >
+                        <div class="card"style="width: 19rem;">
+                            <div class="card-body text-center mt-4">
+                                <a href='{{i['name']}}/info' style='color:rgb(228,50,112)'><h4 class="card-title">{{i['name']}}</h4></a>
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item"><pre><strong>Calories</strong>          {{i['cal']}}Kcal</pre></li>
+                                    <li class="list-group-item"><pre><strong>Fats</strong>              {{i['fats']}}g</pre></li>
+                                    <li class="list-group-item"><pre><strong>Sugars</strong>            {{i['sug']}}g</pre></li>
+                                    <li class="list-group-item"><pre><strong>Protiens</strong>          {{i['pro']}}g</pre></li>
+                                    <li class="list-group-item"><pre><strong>Carbohydrates</strong>     {{i['carbs']}}g</pre></li>
+                                </ul>
+                                <form method='POST' action='{{url_for('views.addcart',food_id=i['food_id'])}}'>
+                                    <input type='hidden'id='{{i['food_id']}}' name='foodid{{i['food_id']}}'><script>var id=document.getElementById('foodid{{i['food_id']}}').value=`{{i['food_id']}}`;
+                                        console.log(document.getElementById('foodid'));
+                                    </script>
+                                    <input type='hidden'id='foodname{{i['food_id']}}' name='foodname{{i['food_id']}}' value='{{i['name']}}'>
+                                    <input type='hidden' id='foodinfo{{i['food_id']}}' name='foodinfo{{i['food_id']}}' value='{{i['nutrition']}}'>
+                                    <input type='text' name='wt' id='wt'>g
+                                    <br>
+                                    <button type='submit' class='btn-primary'>Add to cart</a>
+                                </form>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
+            
         </div>
         <br>
+        <br>
         {%endfor%}
+        <br>
     </div>
+
+            
+        
+        
     {%else%}
     <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-emoji-frown" viewBox="0 0 16 16" style='background-color:yellow;'>
         <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
@@ -47,5 +202,6 @@
        Entered item not found.Please enter the item name correctly.
     {%endif%}
 </div>
+
     
 {%endblock%}

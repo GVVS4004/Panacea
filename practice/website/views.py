@@ -258,10 +258,11 @@ def addcart(food_id):
 def item(name):
     # autocomplete_url='https://api.spoonacular.com/food/ingredients/autocomplete?apiKey=b8cf3af47090431c8648f42c61944428&query={name}'
     # autocomplete_results=requests.get(autocomplete_url)
-    autocomplete_result=api.autocomplete_ingredient_search(name,number=5)
-    autocomplete_results=autocomplete_result.json()
-    pprint.pprint(autocomplete_results)
     try:
+        autocomplete_result=api.autocomplete_ingredient_search(name,number=5)
+        autocomplete_results=autocomplete_result.json()
+        pprint.pprint(autocomplete_results)
+    
         # autocomplete_name=autocomplete_results[0]['name']
         # autocomplete_name=name
         autocomplete_items=list()
@@ -288,15 +289,15 @@ def item(name):
             nutrients=(data[0]['nutrition']['nutrients'])
             for nutrient in nutrients:
                 if nutrient['name']=='Fat':
-                    temp['fats']=round(((nutrient['amount'])*100)/float(cnvrt_amt),3)
+                    temp['fats']=round(((nutrient['amount'])*100)/float(cnvrt_amt),0)
                 elif nutrient['name']=='Protein':
-                    temp['pro']=round(((nutrient['amount'])*100)/float(cnvrt_amt),3)
+                    temp['pro']=round(((nutrient['amount'])*100)/float(cnvrt_amt),0)
                 elif nutrient['name']=='Carbohydrates':
-                    temp['carbs']=round(((nutrient['amount'])*100)/float(cnvrt_amt),3)
+                    temp['carbs']=round(((nutrient['amount'])*100)/float(cnvrt_amt),)
                 elif nutrient['name']=='Calories':
-                    temp['cal']=round(((nutrient['amount'])*100)/float(cnvrt_amt),3)
+                    temp['cal']=round(((nutrient['amount'])*100)/float(cnvrt_amt),0)
                 elif nutrient['name']=='Sugar':
-                    temp['sug']=round(((nutrient['amount'])*100)/float(cnvrt_amt),3)
+                    temp['sug']=round(((nutrient['amount'])*100)/float(cnvrt_amt),0)
             temp['nutrition']=nutrition
             autocomplete_items.append(temp)
     except:
@@ -327,15 +328,15 @@ def cart(upload=False):
             print(j)
             for nutrient in nutrients:
                 if nutrient['name']=='Fat':
-                    temp['fats']=round(((nutrient['amount'])*float(cur_food_wt))/float(cnvrt_amt),3)
+                    temp['fats']=int(round(((nutrient['amount'])*float(cur_food_wt))/float(cnvrt_amt),0))
                 elif nutrient['name']=='Protein':
-                    temp['pro']=round(((nutrient['amount'])*float(cur_food_wt))/float(cnvrt_amt),3)
+                    temp['pro']=int(round(((nutrient['amount'])*float(cur_food_wt))/float(cnvrt_amt),0))
                 elif nutrient['name']=='Carbohydrates':
-                    temp['carbs']=round(((nutrient['amount'])*float(cur_food_wt))/float(cnvrt_amt),3)
+                    temp['carbs']=int(round(((nutrient['amount'])*float(cur_food_wt))/float(cnvrt_amt),0))
                 elif nutrient['name']=='Calories':
-                    temp['cal']=round(((nutrient['amount'])*float(cur_food_wt))/float(cnvrt_amt),3)
+                    temp['cal']=int(round(((nutrient['amount'])*float(cur_food_wt))/float(cnvrt_amt),0))
                 elif nutrient['name']=='Sugar':
-                    temp['sug']=round(((nutrient['amount'])*float(cur_food_wt))/float(cnvrt_amt),3)
+                    temp['sug']=int(round(((nutrient['amount'])*float(cur_food_wt))/float(cnvrt_amt),0))
             temp['food_id']=cur_food_id
             temp['food_name']=cur_food_name
             temp['food_wt']=cur_food_wt
