@@ -1,7 +1,5 @@
 {%extends 'dash_base.html'%}
-{%block heading%}My CART{%endblock%}
-{%block page%}Cart{%endblock%}
-{%block curpage%}Cart{%endblock%}
+{%block heading %}History{%endblock%}
 {%block content%}
 <style>
     @import url('https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
@@ -133,18 +131,18 @@
     }
     </style>
     <div class="container">
-        {%if empty!=True%}
-       <p align=center> If any items are missing then please add them manually. Sorry for the inconvinience.</p>
-        <br>
+        
+     
+        
         <div class="row">
             {% for i in items %}
             <div class="col-xs-12 col-sm-6 col-md-3">
-                <div class="image-flip" ontouchstart="this.classList.toggle('hover');" style='height:29.5rem'>
+                <div class="image-flip" ontouchstart="this.classList.toggle('hover');" style='height:26rem'>
                     <a href='{{i['name']}}/info'>
-                    <div class="mainflip" style='height:29.5rem'>
-                        <div class="frontside" style='height:29.5rem'>
+                    <div class="mainflip" style='height:26rem'>
+                        <div class="frontside" style='height:26rem'>
                             
-                                <div class="card" style="width: 19rem;height:29.5rem">
+                                <div class="card" style="width: 19rem;height:26rem">
                                     <div class="card-body text-center mt-4">
                                         {%if i['src']==None %}
                                         <p><img class=" img-fluid" src="{{url_for('static',filename='images/googlelens.png')}}" alt="card image" style='height:17rem'><h4 class="card-title" style='text-transform: uppercase'>{{i['name']}}</h4></p>
@@ -156,7 +154,7 @@
                                 </div>
                             
                         </div>
-                        <div class="backside" style='height:29.5rem' >
+                        <div class="backside" style='height:26rem' >
                             <div class="card"style="width: 19rem;">
                                 <div class="card-body text-center mt-0">
                                     <h4 class="card-title" style='text-transform: uppercase'>{{i['food_name']}}</h4>
@@ -168,14 +166,7 @@
                                         <li class="list-group-item" style="align-items:left"><pre><strong>Carbohydrates</strong>  {{i['carbs']}} g</pre></li>
                                         <li class="list-group-item"  style="align-items:left"><pre><strong> Weight</strong>      {{i['food_wt']}} g/ml</pre></li>
                                     </ul>
-                                    <form method='POST' action='/delete/{{i['food_id']}}'>
-                                        <input type='hidden'id='{{i['food_id']}}' name='foodid{{i['food_id']}}'><script>var id=document.getElementById('foodid{{i['food_id']}}').value=`{{i['food_id']}}`;
-                                            console.log(document.getElementById('foodid'));
-                                        </script>
-                                        <input type='hidden'id='foodname{{i['food_id']}}' name='foodname{{i['food_id']}}' value='{{i['food_name']}}'><script>
-                                        </script>
-                                        <button type='submit' class='btn bg-gradient-primary mt-0 w-100'>Delete
-                                    </form>
+                                    
                                 </div>
                             </div>
                         </div>
@@ -191,21 +182,6 @@
             <br>
             
         </div>
-        <form action='/analyse' method='POST' style='align-items:center'>
-            <label for='month'>Enter the month</label>
-            <input type='text' placeholder='Month' name='month' id='month'>&nbsp&nbsp&nbsp&nbsp&nbsp
-            <label for='year'>Enter the Year</label>
-            <input type='text' placeholder='Year' name='year' id='year'>
-            &nbsp&nbsp&nbsp&nbsp
-            <button type='submit' class='btn bg-gradient-primary mt-2'>Get report
-        </form>
-        
-        {%elif empty==True%}
-        {%if msg==True%}
-        <p align=center>Please the Upload file clearly.</p>
-        {%endif%}
-        <p align=center>Your Cart is empty. Please add some items into your cart.</p> 
-        {%endif%}
         
         
     </div>

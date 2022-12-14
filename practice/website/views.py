@@ -19,9 +19,6 @@ from . import db
 @views.route('/')
 def home():
     return render_template('home.html')
-@views.route('/items',methods=['POST','GET'])
-def items():
-    return render_template("index.html")
 
 # USER DASH_BOARD
 @views.route('/pie')
@@ -57,62 +54,7 @@ def pie():
 @views.route("/base")
 def base():
     return render_template('dash_base.html')
-# @views.route('/item/<name>')
-# def item(name):
-#     import requests
 
-#     url = "https://edamam-food-and-grocery-database.p.rapidapi.com/parser"
-
-#     querystring = {"ingr":str(name)}
-
-#     headers = {
-#         "X-RapidAPI-Key": "4851f7cfd4mshd48600fa805a277p1dc4b1jsn088a52e2e286",
-#         "X-RapidAPI-Host": "edamam-food-and-grocery-database.p.rapidapi.com"
-#     }
-
-#     response = requests.request("GET", url, headers=headers, params=querystring)
-
-#     # pprint.pprint(response.json(),indent=4)
-#     data=response.json()
-#     length=len(data['hints'])
-#     items=[]
-#     foodids=[]
-#     i=0
-#     for i in range(length):
-#         temp={}
-#         temp['label']=data['hints'][i]['food']['label']
-#         if data['hints'][i]['food']['foodId'] not in foodids:
-#             try :
-#                 temp['cal']=round(float(data['hints'][i]['food']['nutrients']['ENERC_KCAL']),2)
-#             except:
-#                 temp['cal']=None
-#             try :
-#                 temp['carbs']=round(float(data['hints'][i]['food']['nutrients']['CHOCDF']),2)
-#             except :
-#                 temp['carbs']=None
-#             try :
-#                 temp['fats']=round(float(data['hints'][i]['food']['nutrients']['FAT']),2)
-#             except:
-#                 temp['fats']=None
-#             try:
-#                 temp['fib']=round(float(data['hints'][i]['food']['nutrients']['FIBTG']),2)
-#             except:
-#                 temp['fib']=None
-#             try:
-#                 temp['pro']=round(float(data['hints'][i]['food']['nutrients']['PROCNT']),2)
-#             except:
-#                 temp['pro']=None
-#             try:
-#                 temp['src']=data['hints'][i]['food']['image']
-#             except:
-#                 temp['src']=None
-#             try:
-#                 temp['food_id']=data['hints'][i]['food']['foodId']
-#                 foodids.append(data['hints'][i]['food']['foodId'])
-#             except:
-#                 temp['food_id']=None
-#             items.append(temp)
-#     return render_template('item.html',items=items,name=name)
 
 #---------------------------------------------------------------FOOD INFO ROUTE------------------------------------------------------
 #MAKE CHANGES HERE
@@ -159,6 +101,7 @@ def addcart(food_id):
             temp_response=api.parse_ingredients(food_name)
             data = temp_response.json()
             src='https://spoonacular.com/cdn/ingredients_100x100/'+str(data[0]['image'])
+            food_name=data[0]['originalName']
             nutrition=data[0]['nutrition']
             quant=data[0]['amount']
             srcunit=data[0]['unit']
@@ -188,69 +131,7 @@ def addcart(food_id):
     url='/item/'+str(food_name)
     print(url)
     return redirect(url)
-# @views.route('/cart',methods=['POST','GET'])
-# def cart():
-#     uid=current_user._id
-#     cur_user_items=db.db.carts.find_one({'uid':uid})['food_items']
-#     print(cur_user_items)
-#     items=[]
-#     for j in cur_user_items:
-#         cur_food_id=cur_user_items[str(j)]['food_id']
-#         cur_food_name=cur_user_items[str(j)]['food_name']
-#         cur_food_wt=cur_user_items[str(j)]['quant']
-#         import requests
 
-#         url = "https://edamam-food-and-grocery-database.p.rapidapi.com/parser"
-
-#         querystring = {"ingr":str(cur_food_name)}
-
-#         headers = {
-#             "X-RapidAPI-Key": "4851f7cfd4mshd48600fa805a277p1dc4b1jsn088a52e2e286",
-#             "X-RapidAPI-Host": "edamam-food-and-grocery-database.p.rapidapi.com"
-#         }
-
-#         response = requests.request("GET", url, headers=headers, params=querystring)
-#         data=response.json()
-#         print('hints:::::::::')
-#         pprint.pprint(data['hints'])
-#         length=len(data['hints'])
-#         for i in range(length):
-#             if cur_food_id==data['hints'][i]['food']['foodId']:
-#                 temp={}
-#                 temp['label']=data['hints'][i]['food']['label']
-#                 try :
-#                     temp['cal']=round(float(data['hints'][i]['food']['nutrients']['ENERC_KCAL']),2)
-#                 except:
-#                     temp['cal']=None
-#                 try :
-#                     temp['carbs']=round(float(data['hints'][i]['food']['nutrients']['CHOCDF']),2)
-#                 except :
-#                     temp['carbs']=None
-#                 try :
-#                     temp['fats']=round(float(data['hints'][i]['food']['nutrients']['FAT']),2)
-#                 except:
-#                     temp['fats']=None
-#                 try:
-#                     temp['fib']=round(float(data['hints'][i]['food']['nutrients']['FIBTG']),2)
-#                 except:
-#                     temp['fib']=None
-#                 try:
-#                     temp['pro']=round(float(data['hints'][i]['food']['nutrients']['PROCNT']),2)
-#                 except:
-#                     temp['pro']=None
-#                 try:
-#                     temp['src']=data['hints'][i]['food']['image']
-#                 except:
-#                     temp['src']=None
-#                 try:
-#                     temp['food_id']=data['hints'][i]['food']['foodId']
-#                     # foodids.append(data['hints'][i]['food']['foodId'])
-#                 except:
-#                     temp['food_id']=None
-#                 temp['wt']=cur_food_wt
-#                 items.append(temp)
-
-#     return render_template('cart.html',items=items)
 
 #------------------------------------------------------SEARCHING A PARTICULAR ITEM AND IT'S NUTRITIONAL VALUES-------------------------------------
 
@@ -262,7 +143,6 @@ def item(name):
         autocomplete_result=api.autocomplete_ingredient_search(name,number=5)
         autocomplete_results=autocomplete_result.json()
         pprint.pprint(autocomplete_results)
-    
         # autocomplete_name=autocomplete_results[0]['name']
         # autocomplete_name=name
         autocomplete_items=list()
@@ -289,20 +169,22 @@ def item(name):
             nutrients=(data[0]['nutrition']['nutrients'])
             for nutrient in nutrients:
                 if nutrient['name']=='Fat':
-                    temp['fats']=round(((nutrient['amount'])*100)/float(cnvrt_amt),0)
+                    temp['fats']=int(round(((nutrient['amount'])*100)/float(cnvrt_amt),0))
                 elif nutrient['name']=='Protein':
-                    temp['pro']=round(((nutrient['amount'])*100)/float(cnvrt_amt),0)
+                    temp['pro']=int(round(((nutrient['amount'])*100)/float(cnvrt_amt),0))
                 elif nutrient['name']=='Carbohydrates':
-                    temp['carbs']=round(((nutrient['amount'])*100)/float(cnvrt_amt),)
+                    temp['carbs']=int(round(((nutrient['amount'])*100)/float(cnvrt_amt),0))
                 elif nutrient['name']=='Calories':
-                    temp['cal']=round(((nutrient['amount'])*100)/float(cnvrt_amt),0)
+                    temp['cal']=int(round(((nutrient['amount'])*100)/float(cnvrt_amt),0))
                 elif nutrient['name']=='Sugar':
-                    temp['sug']=round(((nutrient['amount'])*100)/float(cnvrt_amt),0)
+                    temp['sug']=int(round(((nutrient['amount'])*100)/float(cnvrt_amt),0))
             temp['nutrition']=nutrition
             autocomplete_items.append(temp)
     except:
+        print("error")
         return render_template('item.html',error=True)
-    return render_template('item.html',items=autocomplete_items,error=False)
+    
+    return render_template('item.html',items=autocomplete_items,error=False,len=len)
 
 #---------------------------------------DISPLAYING THE ITEMS IN USER'S CART-----------------------------------------
 
@@ -371,9 +253,9 @@ def analysis():
     if request.method=="POST":
         cur_month=request.form.get('month')
         cur_year=request.form.get('year')
-        done=True
         uid=current_user._id
         cur_user_items=db.db.carts.find_one({'uid':uid})['food_items']
+        # pprint.pprint(cur_user_items)
         items=[]
         info={'pro':float(0),'fats':float(0),'carbs':float(0),'sug':float(0),'cal':float(0)}
         for j in cur_user_items:
@@ -406,20 +288,68 @@ def analysis():
             temp['src']=cur_food_src
             items.append(temp)
         cur_month_nutri_info=info
+        print(temp)
         if db.db.nutrition_info.find_one({'uid':uid}):
             try:
                 print("try")
+                # pprint.pprint(db.db.nutrition_info.find_one({'uid':uid}))
                 years=db.db.nutrition_info.find_one({'uid':uid})['years']
                 years[cur_year][str(cur_month)]=cur_month_nutri_info
-                db.db.nutrition_info.update_one({'uid':uid},{"$set":{'years':years}})
+                print(years)
+                cart_years=db.db.nutritional_cart.find_one({'uid':uid})['years']
+                print(cart_years)   
+                print(db.db.nutrition_info.update_one({'uid':uid},{"$set":{'years':years}}))
+                tempdict={'food_items':cur_user_items}
+                
+                cart_years[cur_year][str(cur_month)]=tempdict
+                print('temp',tempdict)
+                nurtritional_cart={'uid':uid,'years':cart_years}
+                db.db.nutritional_cart.replace_one({'uid':uid},nurtritional_cart)
+                # pprint.pprint(cart_years[cur_year])
+                # print(db.db.nutrional_cart.update_one({"uid":uid},{"$set":{'years':cart_years}}))
+
+                # pprint.pprint(db.db.nutritional_cart.find_one({'uid':uid}))
+                
             except:
                 print("except")
                 years=db.db.nutrition_info.find_one({'uid':uid})['years']
-                tempdict={cur_month:cur_month_nutri_info}
-                years[cur_year]=tempdict
-                db.db.nutrition_info.update_one({'uid':uid},{"$set":{'years':years}})
+                # db.db.nutritional_cart.insert_one({'uid':uid,'years':{cur_year:{cur_month:{'food_items':cur_user_items}}}})
+
+                cart_years=db.db.nutritional_cart.find_one({'uid':uid})['years']
+                years_tempdict={cur_month:cur_month_nutri_info}
+                
+                
+                try :
+                    tempdict={'food_items':cur_user_items}
+                    cart_years[cur_year][str(cur_month)]=tempdict
+                    print('temp',tempdict)
+                    nurtritional_cart={'uid':uid,'years':cart_years}
+                    years[cur_year]=years_tempdict
+                    pprint.pprint(years)
+                    db.db.nutrition_info.update_one({'uid':uid},{"$set":{'years':years}})
+                    # db.db.nutrional_cart.update_one({"uid":uid},{"$set":{'years':cart_years}})
+                    db.db.nutritional_cart.replace_one({'uid':uid},nurtritional_cart)
+
+                    cart_years=db.db.nutritional_cart.find_one({'uid':uid})['years']
+                except:
+                    tempdict={cur_month:{'food_items':cur_user_items}}
+                    cart_years[cur_year]=tempdict
+                    print('temp',tempdict)
+                    nurtritional_cart={'uid':uid,'years':cart_years}
+                    years[cur_year]=years_tempdict
+                    pprint.pprint(years)
+                    db.db.nutrition_info.update_one({'uid':uid},{"$set":{'years':years}})
+                    # db.db.nutrional_cart.update_one({"uid":uid},{"$set":{'years':cart_years}})
+                    db.db.nutritional_cart.replace_one({'uid':uid},nurtritional_cart)
+                    
+
+                # pprint.pprint(cart_years)
+
         else:
             db.db.nutrition_info.insert_one({'uid':uid,"years":{cur_year:{(cur_month):cur_month_nutri_info}}})
+            db.db.nutritional_cart.insert_one({'uid':uid,'years':{cur_year:{cur_month:{'food_items':cur_user_items}}}})
+            cart_years=db.db.nutritional_cart.find_one({'uid':uid})['years']
+            print(cart_years)
         db.db.carts.find_one_and_delete({'uid':uid})
     return redirect(url_for('views.pie'))
 
@@ -528,7 +458,8 @@ class texTract:
                         items=db.db.carts.find_one({'uid':uid})
                         items=items['food_items']
                         itemslen=len(items)
-                        items[str(food_id)]={'_id':str(food_id),'food_name':key,'quant':int(value[0]),'convert_amt':cnvrt_amt,'src':src,'nutrition':nutrition}
+                        food_name=data[0]['originalName']
+                        items[str(food_id)]={'_id':str(food_id),'food_name':food_name,'quant':int(value[0]),'convert_amt':cnvrt_amt,'src':src,'nutrition':nutrition}
                         db.db.carts.update_one({'uid':uid},{"$set":{'food_items':items}})
                     except:
                         pass
@@ -538,13 +469,14 @@ class texTract:
                         temp_response=api.parse_ingredients(key)
                         data = temp_response.json()
                         src='https://spoonacular.com/cdn/ingredients_100x100/'+str(data[0]['image'])
+                        food_name=data[0]['originalName']
                         nutrition=data[0]['nutrition']
                         quant=data[0]['amount']
                         srcunit=data[0]['unit']
                         food_id=data[0]['id']
                         cnvrt_amt=api.convert_amounts(key,'gram',quant,srcunit)
                         cnvrt_amt=cnvrt_amt.json()['targetAmount']
-                        db.db.carts.insert_one({'uid':uid,'food_items':{str(food_id):{'_id':str(food_id),'food_name':key,'quant':int(value[0]),'convert_amt':cnvrt_amt,'src':src,'nutrition':nutrition}}})
+                        db.db.carts.insert_one({'uid':uid,'food_items':{str(food_id):{'_id':str(food_id),'food_name':food_name,'quant':int(value[0]),'convert_amt':cnvrt_amt,'src':src,'nutrition':nutrition}}})
                     except:
                         pass
             print('main end')
@@ -565,3 +497,73 @@ def upload():
             return render_template('uploadfile.html',err=True)
 
     return render_template('uploadfile.html',err=False)
+
+
+#-------------------------------------------------------GROCERIES ADDITION MODE-------------------------------------------------------------------
+@views.route('/upload_mode',methods=['POST','GET'])
+def upload_mode():
+    return render_template('upload_mode.html')
+#--------------------------------------------------------PROFILE INFO----------------------------------------------------------------------------
+@views.route('/profile',methods=['POST','GET'])
+def profile():
+    uid=current_user._id
+    if request.method=='POST':
+        firstname=request.form.get('firstname')
+        lastname=request.form.get('lastname')
+        phno=request.form.get('phno')
+        db.db.user.update_one({'_id':uid},{'$set':{'firstname':firstname,'lastname':lastname,'phno':phno}})
+        return redirect(url_for('views.profile'))
+    print(uid)
+    firstname=db.db.user.find_one({'_id':uid})['firstname']
+    lastname=db.db.user.find_one({'_id':uid})['lastname']
+    phno=db.db.user.find_one({'_id':uid})['phno']
+    email=db.db.user.find_one({'_id':uid})['email']
+    return render_template('profile.html',firstname=firstname,lastname=lastname,phno=phno,email=email)
+#--------------------------------------------------PREVIOUS CARTS INFO-------------------------------------------------------------
+@views.route('/history',methods=['POST','GET'])
+def history():
+    uid=current_user._id
+    items=[]
+    if request.method=='POST':
+        hismonth=request.form.get('month')
+        hisyear=request.form.get('year')
+        cur_user_items=db.db.nutritional_cart.find_one({'uid':uid})
+        print(cur_user_items)
+        cur_user_items=cur_user_items['years'][hisyear][hismonth]['food_items']
+        for j in cur_user_items:
+            temp={}
+            cur_food_id=j
+            cur_food_name=cur_user_items[str(j)]['food_name']
+            cur_food_wt=cur_user_items[str(j)]['quant']
+            cur_food_src=cur_user_items[str(j)]['src']
+            cnvrt_amt=cur_user_items[str(j)]['convert_amt']
+            nutrients=(cur_user_items[str(j)]['nutrition']['nutrients'])
+            print(j)
+            for nutrient in nutrients:
+                if nutrient['name']=='Fat':
+                    temp['fats']=int(round(((nutrient['amount'])*float(cur_food_wt))/float(cnvrt_amt),0))
+                elif nutrient['name']=='Protein':
+                    temp['pro']=int(round(((nutrient['amount'])*float(cur_food_wt))/float(cnvrt_amt),0))
+                elif nutrient['name']=='Carbohydrates':
+                    temp['carbs']=int(round(((nutrient['amount'])*float(cur_food_wt))/float(cnvrt_amt),0))
+                elif nutrient['name']=='Calories':
+                    temp['cal']=int(round(((nutrient['amount'])*float(cur_food_wt))/float(cnvrt_amt),0))
+                elif nutrient['name']=='Sugar':
+                    temp['sug']=int(round(((nutrient['amount'])*float(cur_food_wt))/float(cnvrt_amt),0))
+            temp['food_id']=cur_food_id
+            temp['food_name']=cur_food_name
+            temp['food_wt']=cur_food_wt
+            temp['src']=cur_food_src
+            items.append(temp)
+            print(len(items))
+            if len(items)==0:
+                empty=True
+    if len(items)==0:
+        empty=True
+    msg=False
+    
+    
+    return render_template('history.html',items=items,msg=msg)
+
+
+

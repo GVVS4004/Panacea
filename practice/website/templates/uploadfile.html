@@ -1,10 +1,13 @@
 {% extends 'dash_base.html' %}
 {%block head%}
 {%endblock%}
+{% block heading%}
+  File Upload
+{%endblock%}
 {% block content%}
 <style>
   .drop-zone {
-    max-width: 200px;
+    max-width: 90%;
     height: 200px;
     padding: 25px;
     align-items: center;
@@ -51,11 +54,9 @@
     font-size: 14px;
     text-align: center;
   }
-  #form{
-    margin-left:50%;
-  }
-</style> 
 
+</style> 
+<div align=center>
 <form  action='/upload' method='POST' enctype='multipart/form-data' id='form'>
  
   <div class="drop-zone">
@@ -63,10 +64,11 @@
   <input type="file" name="file" class="drop-zone__input">
   </div>
 
-    
+   <br> 
   <button type="submit" class="btn btn-primary">Submit</button>
   
 </form>
+</div>
 <script>
   document.querySelectorAll(".drop-zone__input").forEach((inputElement) => {
     const dropZoneElement = inputElement.closest(".drop-zone");

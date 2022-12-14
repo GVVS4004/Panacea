@@ -71,10 +71,15 @@
                             });
                             
                         </script>
+                        <form action="/history" method="POST" class="text-center">
+                            <input type="text" id="year" name="year" value="{{year}}" style="display: none;"><br>
+                            <input type="text" id="month" name="month" value="{{months}}" style="display: none;"><br><br>
+                            <input type="submit" value="More Info" class="btn bg-gradient-primary mt-2">
+                        </form>
                             
                            
                 </div>
-                
+                 
                 </div>
                 {%endfor%}
                 </div>
@@ -86,6 +91,6 @@
     {%elif bl==False %}
     <h1>You currently dont have any reports in your summary.<br>Please add grocery items into your cart.</h1>
     {%endif%}
-    
+    </div>    
 </div>
 {% endblock %}

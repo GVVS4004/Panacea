@@ -44,16 +44,22 @@ def sign_up():
         
         phno=request.form['phno']
         if len(email)<4 :
+            print('email')
             flash('Email must be greater than 3 characters.',category='error')
         elif len(firstname)<2:
+            print('firstname')
             flash(' First name should be greater than 1 character.', category='error')
         elif len(lastname)<2:
+            print('lastname')
             flash(' Last name should be greater than 1 character.',category='error')
         elif password1!=password2:
+            print('pass1!=pass2')
             flash('Passwords do not match.', category='error')
         elif len(password1)<8:
+            print('pass<')
             flash('password must be greater than 7 characters.', category='error')
         elif len(phno)<10 or len(phno)>10:
+            print('ph')
             flash('Mobile number should be 10 digits','error')
         else:
             find_user =  User.get_by_email(email)
@@ -63,6 +69,7 @@ def sign_up():
                 loguser = User(find_user["firstname"],find_user["lastname"],find_user["email"],find_user["phno"],find_user["password"],find_user['_id'])
                 login_user(loguser,remember=True)
                 flash(f'Account created ', 'success')
+                # print('sign_up')
                 return redirect(url_for('views.pie'))
             else:
                 flash(f'Account already exists', 'error')
