@@ -4,6 +4,5 @@ flask_login
 boto3
 spoonacular
 requests
-pprint
 flask_pymongo
 werkzeug
