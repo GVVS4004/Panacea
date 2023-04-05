@@ -362,7 +362,7 @@ class texTract:
                 bytes_test = bytearray(img_test)
                 print('Image loaded', file_name)
 
-            client = boto3.client('textract', region_name="", aws_access_key_id='',aws_secret_access_key= '')
+            client = boto3.client('textract', region_name="ap-south-1", aws_access_key_id='AKIAUII6FPD4KLPVGPRS',aws_secret_access_key= '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')
             response = client.analyze_document(Document={'Bytes': bytes_test,
             'S3Object':{
                 'Bucket':"penaceatextract",
