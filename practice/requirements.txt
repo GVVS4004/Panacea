@@ -1,2 +1,11 @@
 Flask
 Gunicorn
+flask_login
+boto3
+sys
+os
+spoonacular
+requests
+pprint
+flask_pymongo
+werkzeug
