@@ -8,7 +8,7 @@ import re
 from collections import defaultdict
 import requests,os,pprint
 import spoonacular as sp
-api = sp.API("b8cf3af47090431c8648f42c61944428")
+api = sp.API("0cffa00bf7c7473ebae4562856e4c5f5")
 views =Blueprint('views',__name__)
 import json
 from . import db
@@ -91,12 +91,8 @@ def addcart(food_id):
         print('foodname'+str(food_id))
         print(((food_info)))
         url='/item/'+str(food_name)
-        # print(url)
         uid=current_user._id
         if db.db.carts.find_one({'uid':uid}):
-            # print(db.db.carts.find_one({'uid':uid}))
-            import spoonacular as sp
-            api = sp.API("b8cf3af47090431c8648f42c61944428")
             temp_response=api.parse_ingredients(food_name)
             data = temp_response.json()
             src='https://spoonacular.com/cdn/ingredients_100x100/'+str(data[0]['image'])
@@ -113,8 +109,6 @@ def addcart(food_id):
             db.db.carts.update_one({'uid':uid},{"$set":{'food_items':items}})
             # db.db.carts.insert_one({'uid':uid,'food_items':{'food_id':food_id,'food_name':food_name,'quant':food_wt}})
         else:
-            import spoonacular as sp
-            api = sp.API("b8cf3af47090431c8648f42c61944428")
             temp_response=api.parse_ingredients(food_name)
             data = temp_response.json()
             src='https://spoonacular.com/cdn/ingredients_100x100/'+str(data[0]['image'])
@@ -136,14 +130,11 @@ def addcart(food_id):
 
 @views.route('/item/<name>')
 def item(name):
-    # autocomplete_url='https://api.spoonacular.com/food/ingredients/autocomplete?apiKey=b8cf3af47090431c8648f42c61944428&query={name}'
-    # autocomplete_results=requests.get(autocomplete_url)
+    
     try:
         autocomplete_result=api.autocomplete_ingredient_search(name,number=5)
+        print(autocomplete_result.json())   
         autocomplete_results=autocomplete_result.json()
-        pprint.pprint(autocomplete_results)
-        # autocomplete_name=autocomplete_results[0]['name']
-        # autocomplete_name=name
         autocomplete_items=list()
     
         # for item in range(len(autocomplete_results)):
@@ -164,7 +155,7 @@ def item(name):
             nutrition=data[0]['nutrition']
             cnvrt_amt=api.convert_amounts(temp['name'],'gram',quant,srcunit)
             cnvrt_amt=cnvrt_amt.json()['targetAmount']
-            print(cnvrt_amt)
+            # print(cnvrt_amt)
             nutrients=(data[0]['nutrition']['nutrients'])
             for nutrient in nutrients:
                 if nutrient['name']=='Fat':
@@ -287,10 +278,10 @@ def analysis():
             temp['src']=cur_food_src
             items.append(temp)
         cur_month_nutri_info=info
-        print(temp)
+        # print(temp)
         if db.db.nutrition_info.find_one({'uid':uid}):
             try:
-                print("try")
+                # print("try")
                 # pprint.pprint(db.db.nutrition_info.find_one({'uid':uid}))
                 years=db.db.nutrition_info.find_one({'uid':uid})['years']
                 years[cur_year][str(cur_month)]=cur_month_nutri_info
@@ -310,7 +301,7 @@ def analysis():
                 # pprint.pprint(db.db.nutritional_cart.find_one({'uid':uid}))
                 
             except:
-                print("except")
+                # print("except")
                 years=db.db.nutrition_info.find_one({'uid':uid})['years']
                 # db.db.nutritional_cart.insert_one({'uid':uid,'years':{cur_year:{cur_month:{'food_items':cur_user_items}}}})
 
@@ -352,7 +343,7 @@ def analysis():
         db.db.carts.find_one_and_delete({'uid':uid})
     return redirect(url_for('views.pie'))
 
-#------------------------------------------CREATING A AWS TEXTRACT CLASS-----------------------------------------------------
+#------------------------------------------CREATING AN AWS TEXTRACT CLASS-----------------------------------------------------
 
 class texTract:
         def get_kv_map(file_name):
